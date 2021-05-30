@@ -4,6 +4,7 @@ const express = require('express')
 const category = require('../models/category')
 // const { route } = require('./products')
 const router = express.Router()
+const mongoose = require('mongoose')
 
 
 router.get('/', async (req, res) => {
@@ -28,7 +29,7 @@ router.get('/:id', async (req, res) =>{
         })
     }
     else{
-        return res.status(200).send({
+        res.status(200).send({
             category: category,
             success: true
         })
@@ -36,6 +37,11 @@ router.get('/:id', async (req, res) =>{
 })
 
 router.put('/:id', async (req, res) =>{
+
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send('Invalid Category Id')
+    }
+
     const category = await Category.findByIdAndUpdate(req.params.id, 
         {
             name: req.body.name,
@@ -68,7 +74,7 @@ router.post('/', async (req, res) => {
     category = await category.save()
 
     if(!category){
-        return res.status(404).send('the category can not be created')
+        return res.status(500).send('the category can not be created')
     }
 
     res.send(category)
@@ -92,7 +98,20 @@ router.post('/', async (req, res) => {
     // }
 })
 
-router.delete('/:id', (req, res) =>{
+router.delete('/:id', async (req, res) =>{
+
+    if(!mongoose.isValidObjectId(req.params.id)){
+        return res.status(400).send('Invalid Category Id')
+    }
+ 
+    const category = await Category.findById(req.params.id)
+    if(!category){
+         return res.status(400).send({
+            message: 'The category with given ID was not found'
+        })
+    }
+
+
     // const deletedCategoty = async 
     Category.findByIdAndDelete(req.params.id, (err, deletedCategoty) => {
         if(err){
@@ -103,7 +122,7 @@ router.delete('/:id', (req, res) =>{
             })
         }
         else{
-            return res.status(200).send({
+            res.status(200).send({
                 message: 'the category is deleted',
                 deletedCategoty: deletedCategoty,
                 success: true
