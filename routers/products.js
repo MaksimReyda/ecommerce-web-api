@@ -167,4 +167,46 @@ router.delete('/:id', async (req, res) => {
     })
 })
 
+router.get('/get/count', async (req, res) =>{
+
+    const productCount = await Product.countDocuments( (count) => count)
+
+
+    if(!productCount){
+        return res.status(500).send({
+            // message: 'The product with given ID was not found',
+            success: false
+        })
+    }
+    else{
+        res.status(200).send({
+            productCount: productCount,
+            success: true
+        })
+    }
+})
+
+// get all featured products
+router.get('/get/featured', async (req, res) =>{
+
+    const products = await Product.find({
+        isFeatured: true
+    })
+
+
+    if(!products){
+        return res.status(500).send({
+            // message: 'The product with given ID was not found',
+            success: false
+        })
+    }
+    else{
+        // res.status(200).send({
+        //     productCount: productCount,
+        //     success: true
+        // })
+        res.send(products)
+    }
+})
+
 module.exports = router
