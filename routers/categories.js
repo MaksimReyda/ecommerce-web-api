@@ -20,6 +20,14 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) =>{
+    
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send({
+            message: 'Invalid Category Id',
+            success: false
+        })
+    }
+    
     const category = await Category.findById(req.params.id)
 
     if(!category){
@@ -39,7 +47,10 @@ router.get('/:id', async (req, res) =>{
 router.put('/:id', async (req, res) =>{
 
     if(!mongoose.isValidObjectId(req.params.id)){
-        res.status(400).send('Invalid Category Id')
+        res.status(400).send({
+            message: 'Invalid Category Id',
+            success: false
+        })
     }
 
     const category = await Category.findByIdAndUpdate(req.params.id, 
@@ -74,7 +85,10 @@ router.post('/', async (req, res) => {
     category = await category.save()
 
     if(!category){
-        return res.status(500).send('the category can not be created')
+        return res.status(500).send({
+            message: 'The category can not be created',
+            success: false
+        })
     }
 
     res.send(category)
@@ -101,13 +115,17 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) =>{
 
     if(!mongoose.isValidObjectId(req.params.id)){
-        return res.status(400).send('Invalid Category Id')
+        return res.status(400).send({
+            message: 'Invalid Category Id',
+            success: false
+        })
     }
  
     const category = await Category.findById(req.params.id)
     if(!category){
          return res.status(400).send({
-            message: 'The category with given ID was not found'
+            message: 'The category with given ID was not found',
+            success: false
         })
     }
 
