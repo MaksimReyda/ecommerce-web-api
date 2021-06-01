@@ -7,9 +7,30 @@ function authJwt() {
     //get access to the API
     // if token based on differe secret, the API won't work
     const secret = process.env.secret
+    const api = process.env.API_URL
     return expressJwt({
         secret,
         algorithms: ['HS256']
+    }).unless({
+        path: [
+            {
+                // url: `${api}/products`, 
+                url: /api\/products(.*)/,
+                methods: [
+                    'GET',
+                    'OPTIONS'
+                ]
+            },
+            {
+                url: /api\/categories(.*)/,
+                methods: [
+                    'GET',
+                    'OPTIONS'
+                ]
+            },
+            `${api}/users/login`,
+            `${api}/users/register`
+        ]
     })
 }
 
