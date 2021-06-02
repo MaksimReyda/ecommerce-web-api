@@ -11,13 +11,13 @@ const orderItemsScheema = mongoose.Schema({
     }
 })  
 
-orderItemsScheema.virtual('id').get(function () {
-    return this._id.toHexString()
-})
+// orderItemsScheema.virtual('id').get(function () {
+//     return this._id.toHexString()
+// })
 
-orderItemsScheema.set('toJSON', {
-    virtuals: true
-})
+// orderItemsScheema.set('toJSON', {
+//     virtuals: true
+// })
 
 // exports.Order = mongoose.model('Order', orderScheema)
 module.exports = mongoose.model('OrderItem', orderItemsScheema)
