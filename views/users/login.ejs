@@ -1,0 +1,51 @@
+
+    <h1>Login page</h1>
+<br>
+<form name="loginForm" id="login-form">
+    <input type="email" name="email" id="email">
+    <br>
+    <input type="password" name="password" id="password">
+    <br>
+    <button type="submit" id="submit">login</button>
+</form>
+
+
+<script>
+        document.getElementById("submit").addEventListener("click", function(e){
+        e.preventDefault()
+
+        let loginForm = document.forms["loginForm"]
+        let userEmail = loginForm.elements["email"].value
+        let userPasword = loginForm.elements["password"].value
+
+            let body = JSON.stringify({
+                email: userEmail,
+                password: userPasword
+            })
+
+            let request = new XMLHttpRequest()
+
+            //посылаем запрос на /subscribe
+            request.open("POST", "/api/users/login", true)
+            request.setRequestHeader("Content-Type", "application/json")
+
+            request.addEventListener("load", function() {
+                //получаем и парсим ответ от сервера 
+                let messageFromServer = JSON.parse(request.response)
+                console.log(messageFromServer)
+                console.log(messageFromServer.message)
+                window.localStorage.setItem('access_token', messageFromServer.token)
+
+                console.log()
+                let token = window.localStorage.getItem('access_token')
+                console.log(token)
+                // console.log(receiveUser.userEmail)   
+                // console.log(typeof receiveUser.userEmail)
+                // console.log(receiveUser.userEmail.length)
+            })
+
+            request.send(body)
+
+
+        })
+</script>

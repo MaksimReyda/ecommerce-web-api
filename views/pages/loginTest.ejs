@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+</head>
+<body>
+    <h1>test message</h1>
+    <form name="loginForm" id="login-form">
+        <input type="email" name="email" id="email">
+        <br>
+        <input type="password" name="password" id="password">
+        <br>
+        <button type="submit" id="submit">login</button>
+    </form>
+
+    <script>
+
+        function sendRequest(method, url, body = null){
+            return new Promise( (resolve, reject) => {
+                const xhr = new XMLHttpRequest()
+
+                xhr.open(method, url)
+            
+                xhr.responseType = 'json'
+                xhr.setRequestHeader('Content-Type', 'application/json')
+            
+                xhr.onload = () => {
+                    if(xhr.status >= 400){
+                        reject(xhr.response)
+                    } else{
+                        resolve(xhr.response)
+                    }
+            
+                }
+            
+                xhr.onerror = () => {
+                    reject(xhr.response)
+                }
+            
+                xhr.send(JSON.stringify(body))
+            })
+
+        }
+
+        // function sendJSON(){
+        //     e.preventDefault()
+
+            // let loginForm = document.forms["loginForm"]
+            // let userEmail = loginForm.elements["email"].value
+            // let userPasword = loginForm.elements["password"].value
+
+            // let body = JSON.stringify({
+            //     email: userEmail,
+            //     password: userEmail
+            // })
+
+        //     console.log(body)
+        // }
+
+        document.getElementById("submit").addEventListener("click", function(e){
+            e.preventDefault()
+
+            let loginForm = document.forms["loginForm"]
+            let userEmail = loginForm.elements["email"].value
+            let userPasword = loginForm.elements["password"].value
+
+            let body = JSON.stringify({
+                email: userEmail,
+                password: userPasword
+            })
+
+            let request = new XMLHttpRequest()
+
+            //посылаем запрос на /subscribe
+            request.open("POST", "/login", true)
+            request.setRequestHeader("Content-Type", "application/json")
+
+            request.addEventListener("load", function() {
+                //получаем и парсим ответ от сервера 
+                let messageFromServer = JSON.parse(request.response)
+                console.log(messageFromServer)
+                console.log(messageFromServer.message)
+                window.localStorage.setItem('access_token', messageFromServer.token)
+
+                console.log()
+                let token = window.localStorage.getItem('access_token')
+                console.log(token)
+                // console.log(receiveUser.userEmail)   
+                // console.log(typeof receiveUser.userEmail)
+                // console.log(receiveUser.userEmail.length)
+            })
+
+            request.send(body)
+
+
+        })
+
+    </script>
+</body>
+</html>

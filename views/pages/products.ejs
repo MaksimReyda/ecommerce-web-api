@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <% for(var i=0; i<productList.length;i++) {%>
+        <!-- <li><%=productList[i].name %></li> -->
+        <li><%=productList[i].category.name %></li>
+    <%} %>
+    <script>
+        // function sendRequest(method, url, body = null){
+        //     return new Promise( (resolve, reject) => {
+        //         const xhr = new XMLHttpRequest()
+
+        //         xhr.open(method, url)
+            
+        //         xhr.responseType = 'json'
+        //         xhr.setRequestHeader('Content-Type', 'application/json')
+            
+        //         xhr.onload = () => {
+        //             if(xhr.status >= 400){
+        //                 reject(xhr.response)
+        //             } else{
+        //                 resolve(xhr.response)
+        //             }
+            
+        //         }
+            
+        //         xhr.onerror = () => {
+        //             reject(xhr.response)
+        //         }
+            
+        //         xhr.send(JSON.stringify(body))
+        //     })
+
+        // }
+        // let requestURL = '/api/products'
+        // sendRequest('GET', requestURL)
+        //     .then(data => console.log(data))
+        //     .catch(err => console.log(err))
+
+// sendRequest('POST', requestURL, body)
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+    </script>
+
+
+    
+
+</body>
+</html>

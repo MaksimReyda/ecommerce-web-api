@@ -65,13 +65,6 @@ router.post('/', async (req, res) =>{
     const orderItemsIdsResolved = await orderItemsIds
 
 
-    // const totalPrices = await Promise.all(orderItemsIdsResolved.map(async (orderItemId) =>{
-    //     const orderItem = await OrderItem.findById(orderItemId).populate('product', 'price')
-
-    //     const totalPrice = orderItem.product.price * orderItem.quantity
-
-    //     return totalPrice
-    // }))
 
     const totalPrices = await Promise.all(orderItemsIdsResolved.map(async (orderItemId)=>{
         const orderItem = await OrderItem.findById(orderItemId).populate('product', 'price');
@@ -184,5 +177,10 @@ router.delete('/:id', async (req, res) =>{
         }
     })
 })
+
+
+// router.get('/get/totalsales', async (req, res) =>{
+    
+// })
 
 module.exports = router

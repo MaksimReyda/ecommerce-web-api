@@ -25,7 +25,12 @@ router.get( `/`, async (req, res) =>{
             success:false
         })
     }
+
     res.send(productList)
+    // res.send({
+    //     productList: productList
+    // })
+    // res.render('')
 })
 
 router.get('/:id', async (req, res) =>{

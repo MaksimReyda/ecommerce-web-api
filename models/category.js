@@ -21,6 +21,5 @@ categoryScheema.set('toJSON', {
     virtuals: true
 })
 
-// exports.Categoty = mongoose.model('Category', categoryScheema)
 
 module.exports = mongoose.model('Category', categoryScheema)

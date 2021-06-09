@@ -21,32 +21,30 @@ router.get('/', async (req, res) => {
 })
 
 //get a specific  user
-router.get('/:id', async (req, res) =>{
+// router.get('/:id', async (req, res) =>{
 
-    if(!mongoose.isValidObjectId(req.params.id)){
-        res.status(400).send({
-            message: 'Invalid User Id',
-            success: false
-        })
-    }
+//     if(!mongoose.isValidObjectId(req.params.id)){
+//         res.status(400).send({
+//             message: 'Invalid User Id',
+//             success: false
+//         })
+//     }
     
-    const user = await User.findById(req.params.id).select('-passwordHash')
+//     const user = await User.findById(req.params.id).select('-passwordHash')
 
-    if(!user){
-        return res.status(500).send({
-            message: 'The user with given ID was not found',
-            success: false
-        })
-    }
-    else{
-        res.status(200).send({
-            user: user,
-            success: true
-        })
-    }
-
-
-})
+//     if(!user){
+//         return res.status(500).send({
+//             message: 'The user with given ID was not found',
+//             success: false
+//         })
+//     }
+//     else{
+//         res.status(200).send({
+//             user: user,
+//             success: true
+//         })
+//     }
+// })
 
 router.post('/', async (req, res) =>{
     let user = new User({
@@ -176,12 +174,17 @@ router.post('/login', async (req, res) =>{
             {expiresIn: '1d'}
         )
         
-        res.status(200).send({
-            message: 'The user authenticated',
-            user: user,
-            token: token,
-            success: true
-        })
+        // res.status(200).send({
+        //     message: 'The user authenticated',
+        //     user: user,
+        //     token: token,
+        //     success: true
+        // })
+        return res.redirect(302, 'http://localhost:3000/api/users/profile')
+
+        
+        // res.redirect('/')
+        // return res.redirect('pages/profile')
     } else{
         res.status(400).send({
             message: 'The password is wrong',
@@ -189,6 +192,15 @@ router.post('/login', async (req, res) =>{
         })
     }   
 
+})
+
+router.get('/login', (req, res) =>{
+    res.render('users/login')
+})
+
+
+router.get('/profile', (req, res) =>{
+    res.render('users/profile')
 })
 
 
@@ -225,6 +237,7 @@ router.post('/register', async (req, res) =>{
     }
 
     res.send(user)
+
 })
 
 router.get('/get/count', async (req, res) =>{
