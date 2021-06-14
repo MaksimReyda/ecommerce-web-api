@@ -15,9 +15,11 @@ app.use('*', cors())
 
 require('dotenv/config')
 
-const publicDirectory = path.join(__dirname, './public')
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.static(publicDirectory))
+// const publicDirectory = path.join(__dirname, './public')
+
+// app.use(express.static(publicDirectory))
 
 app.set("view engine", "ejs")
 app.set('views', __dirname + '/views')
@@ -28,6 +30,7 @@ const api = process.env.API_URL
 
 // Middleware
 app.use(express.json())
+// app.use(express.urlencoded({extended: false}))
 app.use(morgan('tiny'))
 app.use(authJwt())
 app.use(errorHandler)
@@ -37,6 +40,9 @@ const productsRouter = require('./routers/products')
 const categoriesRouter = require('./routers/categories')
 const usersRouter = require('./routers/users')
 const ordersRouter = require('./routers/orders')
+const homePageRouter = require('./routers/homepage')
+const signupRouter = require('./routers/signup')
+const profileRouter = require('./routers/profile')
 const { emitKeypressEvents } = require('readline')
 const category = require('./models/category')
 const { response } = require('express')
@@ -48,6 +54,9 @@ app.use(`${api}/products`, productsRouter)
 app.use(`${api}/categories`, categoriesRouter)
 app.use(`${api}/users`, usersRouter)
 app.use(`${api}/orders`, ordersRouter)
+app.use('/', homePageRouter)
+app.use('/', signupRouter)
+app.use('/', profileRouter)
 
 
 
@@ -58,6 +67,11 @@ app.use(`${api}/orders`, ordersRouter)
 app.get('/', (req, res) =>{
     res.render('pages/profile')
 })
+
+// app.get('/api/users/profile', (req, res) =>{
+//     res.render('pages/profile')
+// })
+
 
 app.post('/login', (req, res)=>{
     let url = 'http://localhost:3000/api/users/login'
@@ -85,7 +99,7 @@ app.get('/products', (req, res) =>{
         } else{
             let data = JSON.parse(body)
 
-            console.log(data)
+            // console.log(data)
 
             res.render('pages/products',{
                 productList: data                

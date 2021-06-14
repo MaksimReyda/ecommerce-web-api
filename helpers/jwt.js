@@ -57,6 +57,27 @@ function authJwt() {
                     'OPTIONS'
                 ]
             },
+            {
+                url: '/signup',
+                methods: [
+                    'GET',
+                    'OPTIONS'
+                ]
+            },
+            {
+                url: '/profile/:id',
+                methods: [
+                    'GET',
+                    'OPTIONS'
+                ]
+            },
+            {
+                url: '/api/users/:id',
+                methods: [
+                    'GET',
+                    'OPTIONS'
+                ]
+            },
             `${api}/users/login`,
             `${api}/users/register`
         ]

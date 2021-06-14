@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+    <div class="product-wrapper wrapper">
+        <div class="main-container">
+            <section id="section-1">
+                <div class="product-img">
+                    <img src="/images/basketball.png" alt="">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">
+                        <span>Name:</span> <%= product.name %>
+                    </div>
+                    <div class="product-brand">
+                        <span>Brand:</span> <%= product.brand %>
+                    </div>
+                    <div class="product-price">
+                        <span>Price:</span> <%= product.price %> $
+                    </div>
+                    <div class="product-description">
+                        <span>Description:</span> <%= product.description %>
+                    </div>
+                    <button class="add-to-chart" type="submit">Add to chart</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

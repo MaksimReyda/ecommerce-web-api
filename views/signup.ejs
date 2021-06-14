@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+</head>
+<body>
+    <div class="sign-up-wrapper wrapper">
+        <div class="main-container">
+            <div class="sign-up-form">
+
+                <form action="/api/users/register" method="post">
+                    <div class="name inputs">
+                        <label for="name">Enter you name</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+
+                    <div class="email inputs">
+                        <label for="email">Enter you email</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+
+                    <div class="password inputs">
+                        <label for="password">Entr yor password</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+
+                    <div class="phone inputs">
+                        <label for="phone">Enter your phone</label>
+                        <input type="number" name="phone" id="phone" required>
+                    </div>
+
+                    <!-- <div class="street">
+                        <label for="street">Enter your street</label>
+                        <input type="text" name="street" id="street">
+                    </div>
+
+                    <div class="apartment">
+                        <label for="apartment">Enter your apartment</label>
+                        <input type="number" name="apartment" id="apartment">
+                    </div>
+
+                    <div class="zip">
+                        <label for="zip">Enter your zip</label>
+                        <input type="number" name="zip" id="zip">
+                    </div>
+
+                    <div class="city">
+                        <label for="city">Enter your city</label>
+                        <input type="text" name="city" id="city">
+                    </div>
+
+
+                    <div class="country">
+                        <label for="country">Enter your country</label>
+                        <input type="text" name="country" id="country">
+                    </div> -->
+
+                    <div class="button-with-link">
+                        <button type="submit">Sign up</button>
+                        <a href="/login">Have an account - Login</a>
+                    </div> 
+                    
+
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

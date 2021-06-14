@@ -1,7 +1,7 @@
 
     <h1>Login page</h1>
 <br>
-<form name="loginForm" id="login-form">
+<form name="loginForm" id="login-form" action="/api/users/login" method="post">
     <input type="email" name="email" id="email">
     <br>
     <input type="password" name="password" id="password">
@@ -9,8 +9,9 @@
     <button type="submit" id="submit">login</button>
 </form>
 
+<!-- <form action="" method="post"></form> -->
 
-<script>
+<!-- <script>
         document.getElementById("submit").addEventListener("click", function(e){
         e.preventDefault()
 
@@ -48,4 +49,4 @@
 
 
         })
-</script>
+</script> -->

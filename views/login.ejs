@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-wrapper wrapper">
+        <div class="main-container">
+            <div class="message">
+                <% if(message) {%> 
+                    <h2><%= message %></h2>
+                <% } %>
+            </div>
+            <div class="login-form">
+                <!-- action="/api/users/login" method="post" -->
+
+                <form  name="loginForm">
+                    <!-- <div class="name inputs">
+                        <label for="name">Enter you name</label>
+                        <input type="text" name="name" id="name" required>
+                    </div> -->
+
+                    <div class="email inputs">
+                        <label for="email">Enter you email</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+
+                    <div class="password inputs">
+                        <label for="password">Entr yor password</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+
+                    <!-- <div class="phone inputs">
+                        <label for="phone">Enter your phone</label>
+                        <input type="number" name="phone" id="phone" required>
+                    </div> -->
+
+                    <div class="button-with-link">
+                        <button type="submit" >Sign up</button>
+                        <a href="/signup">Don't have an account - Sign up</a>
+                    </div> 
+                    
+
+                </form>
+
+                <script>
+
+
+
+                    async function SendData(){
+                        let loginForm = document.forms["loginForm"]
+                        let userEmail = loginForm.elements["email"].value
+                        let userPasword = loginForm.elements["password"].value
+
+                        let body = JSON.stringify({
+                            email: userEmail,
+                            password: userEmail 
+                        })
+
+                        let response = await fetch('/api/users/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json;'
+                            },
+                            body: JSON.stringify(body)
+                        })
+
+                        let result = await response.json();
+
+                        console.log(result)
+                    }
+
+                    SendData()
+                </script>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

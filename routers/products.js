@@ -47,9 +47,12 @@ router.get('/:id', async (req, res) =>{
         })
     }
     else{
-        res.status(200).send({
-            product: product,
-            success: true
+        // res.status(200).send({
+        //     product: product,
+        //     success: true
+        // })
+        res.render('product', {
+            product: product
         })
     }
 })

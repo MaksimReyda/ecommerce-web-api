@@ -21,30 +21,33 @@ router.get('/', async (req, res) => {
 })
 
 //get a specific  user
-// router.get('/:id', async (req, res) =>{
+router.get('/:id', async (req, res) =>{
 
-//     if(!mongoose.isValidObjectId(req.params.id)){
-//         res.status(400).send({
-//             message: 'Invalid User Id',
-//             success: false
-//         })
-//     }
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send({
+            message: 'Invalid User Id',
+            success: false
+        })
+    }
     
-//     const user = await User.findById(req.params.id).select('-passwordHash')
+    const user = await User.findById(req.params.id).select('-passwordHash')
 
-//     if(!user){
-//         return res.status(500).send({
-//             message: 'The user with given ID was not found',
-//             success: false
-//         })
-//     }
-//     else{
-//         res.status(200).send({
-//             user: user,
-//             success: true
-//         })
-//     }
-// })
+    if(!user){
+        return res.status(500).send({
+            message: 'The user with given ID was not found',
+            success: false
+        })
+    }
+    else{
+        // res.status(200).send({
+        //     user: user,
+        //     success: true
+        // })
+        res.render('profile', {
+            user: user
+        })
+    }
+})
 
 router.post('/', async (req, res) =>{
     let user = new User({
@@ -153,11 +156,21 @@ router.post('/login', async (req, res) =>{
 
     const secret = process.env.secret
 
+    console.log(req.body.email)
+    console.log(req.body.password)
+
     if(!user){
         return res.status(400).send({
             message: 'The user was not found',
             success: false
         })
+
+        // let message = 'The user was not found'
+
+        // res.render('login', {
+        //     message: 'The user was not found'
+        // })
+        
     }
 
     //compare given password by user with password from DB
@@ -174,14 +187,30 @@ router.post('/login', async (req, res) =>{
             {expiresIn: '1d'}
         )
         
-        // res.status(200).send({
-        //     message: 'The user authenticated',
-        //     user: user,
-        //     token: token,
-        //     success: true
-        // })
-        return res.redirect(302, 'http://localhost:3000/api/users/profile')
+        res.status(200).send({
+            message: 'The user authenticated',
+            user: user,
+            token: token,
+            success: true
+        })
 
+        // res.render('success-login', {
+        //     user: user,
+        //     token: token
+        // })
+
+        // res.redirect(`profile/${user.id}`)
+
+        // res.render(`profile/${user.id}`, {
+        //     user: user
+        // })
+
+
+        // return res.redirect(302, 'http://localhost:3000/api/users/profile')
+
+        // res.redirect('/users/profile')
+        
+            // res.redirect('api/users/profile')
         
         // res.redirect('/')
         // return res.redirect('pages/profile')
@@ -190,6 +219,9 @@ router.post('/login', async (req, res) =>{
             message: 'The password is wrong',
             success: false
         })
+        // res.render('login', {
+        //     message: 'The password is wrong'
+        // })
     }   
 
 })
@@ -199,7 +231,7 @@ router.get('/login', (req, res) =>{
 })
 
 
-router.get('/profile', (req, res) =>{
+router.get('/users/profile', (req, res) =>{
     res.render('users/profile')
 })
 

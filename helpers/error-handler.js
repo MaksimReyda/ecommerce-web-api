@@ -1,13 +1,6 @@
 //hendeling errors
 
 function errorHandler(err, req, res, next){
-    // if(err){
-        // res.status(500).json({
-        //     message: err,
-        //     success: false
-        // })
-    // }
-
     if(err.name === 'UnauthorizedError'){
         // jwt authentication error
         return res.status(401).json({
@@ -17,7 +10,7 @@ function errorHandler(err, req, res, next){
 
     if(err.name === 'ValidationError'){
         // validation error
-        return res.status(401).json({
+        return res.status(400).json({
             message: err
         })
     }
