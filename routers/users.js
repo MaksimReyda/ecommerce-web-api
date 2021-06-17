@@ -39,13 +39,13 @@ router.get('/:id', async (req, res) =>{
         })
     }
     else{
-        // res.status(200).send({
-        //     user: user,
-        //     success: true
-        // })
-        res.render('profile', {
-            user: user
+        res.status(200).send({
+            user: user,
+            success: true
         })
+        // res.render('profile', {
+        //     user: user
+        // })
     }
 })
 
@@ -156,6 +156,7 @@ router.post('/login', async (req, res) =>{
 
     const secret = process.env.secret
 
+    console.log('----------------')
     console.log(req.body.email)
     console.log(req.body.password)
 

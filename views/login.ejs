@@ -17,7 +17,7 @@
             <div class="login-form">
                 <!-- action="/api/users/login" method="post" -->
 
-                <form  name="loginForm">
+                <form  name="loginForm" id="myForm">
                     <!-- <div class="name inputs">
                         <label for="name">Enter you name</label>
                         <input type="text" name="name" id="name" required>
@@ -39,7 +39,7 @@
                     </div> -->
 
                     <div class="button-with-link">
-                        <button type="submit" >Sign up</button>
+                        <button type="submit" >Login</button>
                         <a href="/signup">Don't have an account - Sign up</a>
                     </div> 
                     
@@ -47,33 +47,121 @@
                 </form>
 
                 <script>
+                    async function postFormDataAsJson({ url, formData }) {
+                    const plainFormData = Object.fromEntries(formData.entries());
+                    const formDataJsonString = JSON.stringify(plainFormData);
 
+                    console.log(formDataJsonString)
 
+                    const fetchOptions = {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: formDataJsonString,
+                    };
 
-                    async function SendData(){
-                        let loginForm = document.forms["loginForm"]
-                        let userEmail = loginForm.elements["email"].value
-                        let userPasword = loginForm.elements["password"].value
+                    const response = await fetch(url, fetchOptions);
 
-                        let body = JSON.stringify({
-                            email: userEmail,
-                            password: userEmail 
-                        })
+                    if (!response.ok) {
+                        const errorMessage = await response.text();
+                        throw new Error(errorMessage);
+                    }
+                    // window.location.href="http://localhost:3000/products";
 
-                        let response = await fetch('/api/users/login', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json;'
-                            },
-                            body: JSON.stringify(body)
-                        })
+                    return response.json();
+                }
 
-                        let result = await response.json();
+                /**
+                 * Event handler for a form submit event.
+                 *
+                 * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event
+                 *
+                 * @param {SubmitEvent} event
+                 */
+                async function handleFormSubmit(event) {
+                    event.preventDefault();
 
-                        console.log(result)
+                    const form = event.currentTarget;
+                    const url = '/api/users/login';
+
+                    try {
+                        const formData = new FormData(form);
+                        const responseData = await postFormDataAsJson({ url, formData });
+                        if(responseData.message === 'The user authenticated'){
+                            window.location.href="http://localhost:3000/products";
+                        }
+                        // console.log({ responseData });
+                        window.localStorage.setItem('access_token', responseData.token)
+                        console.log(responseData)
+
+                    } catch (error) {
+                        console.error(error);
                     }
 
-                    SendData()
+                    
+                }
+
+                const exampleForm = document.getElementById("myForm");
+                exampleForm.addEventListener("submit", handleFormSubmit);
+
+                    // let myForm = document.getElementById("myForm")
+
+                    // myForm.addEventListener("submit", async (e) =>{
+                    //     e.preventDefault();
+                    //     let loginForm = document.forms["loginForm"]
+                    //     let userEmail = loginForm.elements["email"].value
+                    //     let userPasword = loginForm.elements["password"].value
+
+                    //     let body = JSON.stringify({
+                    //         email: userEmail,
+                    //         password: userPasword 
+                    //     })
+                        
+                    //     console.log('+++++')
+                    //     console.log(body)
+
+                    //     let response = await fetch('http://localhost:3000/api/users/login', {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Content-Type': 'application/json;'
+                    //         },
+                    //         body: JSON.stringify(body)
+                    //     })
+
+                    //     let result = await response.json();
+
+                    //     console.log(result)
+                    // }) 
+
+
+                    // async function SendData(){
+                    //     let loginForm = document.forms["loginForm"]
+                    //     let userEmail = loginForm.elements["email"].value
+                    //     let userPasword = loginForm.elements["password"].value
+
+                    //     let body = JSON.stringify({
+                    //         email: userEmail,
+                    //         password: userEmail 
+                    //     })
+
+                    //     console.log(body)
+
+                    //     let response = await fetch('/api/users/login', {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Content-Type': 'application/json;'
+                    //         },
+                    //         body: JSON.stringify(body)
+                    //     })
+
+                    //     let result = await response.json();
+
+                    //     console.log(result)
+                    // }
+
+                    // SendData()
                 </script>
 
             </div>
